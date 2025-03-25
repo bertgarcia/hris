@@ -1,0 +1,258 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #f4f4f4, #e0e0e0);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Header styling */
+header {
+    background-color: #6cb45a;
+    color: #ffffff;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Navigation styling */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #495057;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+nav ul li a:hover {
+    background-color: #6c757d;
+    border-radius: 4px;
+}
+
+/* Container styling */
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form styling */
+form {
+    margin-bottom: 30px;
+}
+
+form h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 5px;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #495057;
+}
+
+form input[type="text"],
+form input[type="date"],
+form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Table container to prevent overflow */
+/* General Table Styling */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    max-width: 100vw;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    white-space: nowrap; /* Keeps text from wrapping */
+    border-bottom: 1px solid #ddd;
+}
+
+/* Sticky Headers */
+th {
+    position: sticky;
+    top: 0;
+    background: linear-gradient(to right, #6fdf75, #01bd2a);
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 15px;
+}
+
+/* Alternating Row Colors */
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+
+/* Button Styling */
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table-container {
+        overflow-x: scroll;
+    }
+    #employeeList th, #employeeList td {
+        font-size: 14px;
+    }
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Table headers and cells */
+table th,
+table td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+    white-space: normal; /* Allows text to wrap */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Table header styling */
+table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+}
+
+/* Zebra striping for table rows */
+table tbody tr:nth-child(even) {
+    background-color: #f1f3f5;
+}
+
+table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Action buttons in tables */
+table button {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+table button:hover {
+    background-color: #218838;
+}
+
+table button:nth-child(2) {
+    background-color: #dc3545;
+}
+
+table button:nth-child(2):hover {
+    background-color: #c82333;
+}
+
+/* Footer styling */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #343a40;
+    color: #ffffff;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* Responsive fixes for small screens */
+@media screen and (max-width: 768px) {
+    table {
+        font-size: 12px;
+    }
+    table th,
+    table td {
+        padding: 8px;
+    }
+}

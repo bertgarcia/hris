@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Human Resource Information System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="employee.html">Add-Employees</a></li>
+                <li><a href="employee-list.html">Employee-List</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container" style="padding: 0 15px;">
+        <h2>Employee List</h2>
+        <div class="table-container">
+            <table  id="employeeList">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                        <th>Date Hired</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th>Telephone</th>
+                        <th>Cellphone</th>
+                        <th>Birthdate</th>
+                        <th>Birthplace</th>
+                        <th>TIN Number</th>
+                        <th>Civil Status</th>
+                        <th>Sex</th>
+                        <th>SSS Number</th>
+                        <th>Nationality</th>
+                        <th>Weight</th>
+                        <th>Height</th>
+                        <th>Educational Background</th>
+                        <th>Employment Record</th>
+
+                    </tr>
+                </thead>
+                <tbody id="employee-tbody">
+                    <!-- Employee rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+   
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch("http://localhost/hris/hris-project/backend/models/getEmployees.php")
+        .then(response => response.json())
+        .then(data => { 
+            console.log("Employee Data:", data); // Debugging
+
+            let tableBody = document.getElementById("employee-tbody");
+            tableBody.innerHTML = "";
+
+            data.forEach(employee => {
+                // Ensure the fields are properly populated
+                let education = employee.educational_background && Array.isArray(employee.educational_background) 
+                    ? employee.educational_background : [];
+                let employment = employee.employment_record && Array.isArray(employee.employment_record) 
+                    ? employee.employment_record : [];
+
+                // Debugging to check the actual values
+                console.log("Education:", education);
+                console.log("Employment:", employment);
+
+                // Properly map and render the data
+                let educationContent = education.length > 0 
+                    ? education.map(edu => `
+                        Level: ${edu.level || "N/A"}, School: ${edu.name_of_school || "N/A"}, 
+                        Date Attended: ${edu.date_attended || "N/A"}, Degree: ${edu.degree_earned || "N/A"}
+                    `).join("<br>") 
+                    : "No Educational Records Available";
+
+                let employmentContent = employment.length > 0 
+                    ? employment.map(emp => `
+                        Date: ${emp.date || "N/A"}, Company: ${emp.company || "N/A"}, 
+                        Address: ${emp.address || "N/A"}, Position: ${emp.position || "N/A"}
+                    `).join("<br>") 
+                    : "No Employment Records Available";
+
+                // Ensure the content is properly escaped and rendered as HTML
+                let row = `<tr>
+                    <td>${employee.id || "N/A"}</td>
+                    <td>${employee.name || "N/A"}</td>
+                    <td>${employee.position || "N/A"}</td>
+                    <td>${employee.department || "N/A"}</td>
+                    <td>${employee.date_hired || "N/A"}</td>
+                    <td>${employee.address || "N/A"}</td>
+                    <td>${employee.status || "N/A"}</td>
+                    <td>${employee.telephone || "N/A"}</td>
+                    <td>${employee.cellphone || "N/A"}</td>
+                    <td>${employee.birthdate || "N/A"}</td>
+                    <td>${employee.birthplace || "N/A"}</td>
+                    <td>${employee.tin_number || "N/A"}</td>
+                    <td>${employee.civil_status || "N/A"}</td>
+                    <td>${employee.sex || "N/A"}</td>
+                    <td>${employee.sss_number || "N/A"}</td>
+                    <td>${employee.nationality || "N/A"}</td>
+                    <td>${employee.weight || "N/A"}</td>
+                    <td>${employee.height || "N/A"}</td>
+                    <td>${educationContent || "ERROR"}</td>
+                    <td>${employmentContent|| "ERROR"}</td>
+                </tr>`;
+
+                tableBody.innerHTML += row;
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching employee data:", error);
+        });
+  });
+    </script>
+     <script src="../js/scripts.js"></script>
+</body>
+</html>

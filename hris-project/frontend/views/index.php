@@ -46,9 +46,6 @@
         </div>
         <div id="employee-list"></div>
     </main>
-    <footer>
-        <p>&copy; 2023 HRIS Project</p>
-    </footer>
-    <script src="../js/scripts.js"></script>
+       <script src="../js/scripts.js"></script>
 </body>
 </html>

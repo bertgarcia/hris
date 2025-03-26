@@ -4,6 +4,7 @@ body {
     background: linear-gradient(to right, #f4f4f4, #e0e0e0);
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .container {
@@ -116,9 +117,13 @@ form button:hover {
 /* General Table Styling */
 .table-container {
     width: 100%;
-    overflow-x: auto; /* Enables horizontal scrolling */
     max-width: 100vw;
     padding: 10px;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    overflow-y: auto; /* Enables vertical scrolling */
+    max-height: 400px; /* Adjust the height as needed */
+    position: relative; /* Ensures sticky positioning works */
+    display: block; /* Ensures proper layout for sticky headers */
 }
 
 table {
@@ -128,6 +133,8 @@ table {
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: #fff;
+    border-spacing: 0; /* Ensures no gaps between cells */
+    table-layout: fixed; /* Ensures proper column sizing */
 }
 
 th, td {
@@ -136,16 +143,34 @@ th, td {
     white-space: nowrap; /* Keeps text from wrapping */
     border-bottom: 1px solid #ddd;
 }
-
-/* Sticky Headers */
-th {
+thead{
     position: sticky;
     top: 0;
-    background: linear-gradient(to right, #6fdf75, #01bd2a);
+    z-index: 10; /* Ensures it stays above other elements */
+    background: #6fdf75; /* Solid color to prevent transparency issues */
+}
+tbody{
+    display: block;
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+/* Sticky Headers */
+th {
+    position: sticky; /* Makes the header sticky */
+    top: 0; /* Sticks to the top of the container */
+    z-index: 10; /* Ensures it stays above other content */
+    background: linear-gradient(to right, #6fdf75, #01bd2a); /* Keeps the background visible */
     color: white;
     text-transform: uppercase;
     font-weight: bold;
     padding: 15px;
+    border: 1px solid #dee2e6; /* Ensures consistent borders */
+}
+tr{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 /* Alternating Row Colors */
@@ -303,3 +328,25 @@ footer {
     font-weight: bold;
     margin: 0;
 }
+
+
+th:nth-child(1), td:nth-child(1) { width: 50px; }  /* ID */
+th:nth-child(2), td:nth-child(2) { width: 120px; } /* Name */
+th:nth-child(3), td:nth-child(3) { width: 100px; } /* Position */
+th:nth-child(4), td:nth-child(4) { width: 120px; } /* Department */
+th:nth-child(5), td:nth-child(5) { width: 100px; } /* Date Hired */
+th:nth-child(6), td:nth-child(6) { width: 150px; } /* Address */
+th:nth-child(7), td:nth-child(7) { width: 100px; } /* Status */
+th:nth-child(8), td:nth-child(8) { width: 120px; } /* Telephone */
+th:nth-child(9), td:nth-child(9) { width: 120px; } /* Cellphone */
+th:nth-child(10), td:nth-child(10) { width: 120px; } /* Birthdate */
+th:nth-child(11), td:nth-child(11) { width: 150px; } /* Birthplace */
+th:nth-child(12), td:nth-child(12) { width: 120px; } /* TIN Number */
+th:nth-child(13), td:nth-child(13) { width: 120px; } /* Civil Status */
+th:nth-child(14), td:nth-child(14) { width: 80px; } /* Sex */
+th:nth-child(15), td:nth-child(15) { width: 120px; } /* SSS Number */
+th:nth-child(16), td:nth-child(16) { width: 120px; } /* Nationality */
+th:nth-child(17), td:nth-child(17) { width: 80px; } /* Weight */
+th:nth-child(18), td:nth-child(18) { width: 80px; } /* Height */
+th:nth-child(19), td:nth-child(19) { width: 250px; } /* Educational Background */
+th:nth-child(20), td:nth-child(20) { width: 250px; } /* Employment Record */

@@ -1,12 +1,26 @@
 <?php
 require_once __DIR__ . "/../config/database.php";
+require_once __DIR__ . "/EmploymentRecord.php"; // Include the file containing TrainingRecord class
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 
 header("Content-Type: application/json");
+
+$inputData = json_decode(file_get_contents("php://input"), true);
+if (!$inputData) {
+    echo json_encode(["success" => false, "message" => "No data received."]);
+    exit;
+}
+
+// Debugging: Log received data
+error_log("Received Data: " . print_r($inputData, true));
 
 // Add CORS headers
 header("Access-Control-Allow-Origin: *"); // Allow all origins (adjust as needed)
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
 
 // Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -30,7 +44,8 @@ $data = json_decode($json, true);
 // Debug: Check if JSON decoding works
 if (!$data) {
     echo json_encode([
-        "error" => "Invalid JSON: " . json_last_error_msg()
+        "success" => false,
+        "message" => "Invalid JSON: " . json_last_error_msg()
     ]);
     exit;
 }
@@ -63,21 +78,40 @@ $employment_record = isset($data['employment_record']) && is_array($data['employ
     ? json_encode($data['employment_record']) 
     : '[]';
 
+$training_records = isset($data['training_records']) && is_array($data['training_records']) 
+    ? json_encode($data['training_records']) 
+    : '[]';
+
 // Escape JSON strings before inserting
 $educational_background = $conn->real_escape_string($educational_background);
 $employment_record = $conn->real_escape_string($employment_record);
+$training_records = $conn->real_escape_string($training_records);
 
-$sql = "INSERT INTO employees (name, position, department, date_hired, address, status, telephone, cellphone, birthdate, birthplace, tin_number, civil_status, sex, sss_number, nationality, weight, height, educational_background, employment_record) 
-        VALUES ('$name', '$position', '$department', '$date_hired', '$address', '$status', '$telephone', '$cellphone', '$birthdate', '$birthplace', '$tin_number', '$civil_status', '$sex', '$sss_number', '$nationality', '$weight', '$height', '$educational_background', '$employment_record')";
+$sql = "INSERT INTO employees (name, position, department, date_hired, address, status, telephone, cellphone, birthdate, birthplace, tin_number, civil_status, sex, sss_number, nationality, weight, height, educational_background, employment_record, training_records) 
+        VALUES ('$name', '$position', '$department', '$date_hired', '$address', '$status', '$telephone', '$cellphone', '$birthdate', '$birthplace', '$tin_number', '$civil_status', '$sex', '$sss_number', '$nationality', '$weight', '$height', '$educational_background', '$employment_record', '$training_records')";
 
 // Log the query to a file for debugging
 file_put_contents(__DIR__ . "/query.log", $sql . PHP_EOL, FILE_APPEND);
 
+$response = ["success" => true, "message" => "Employee added successfully"];
+$errors = [];
+
 // Execute the query and handle errors
 if ($conn->query($sql)) {
     $insertedId = $conn->insert_id; // Get the last inserted ID
-    echo json_encode(["success" => true, "message" => "Employee added successfully", "id" => $insertedId]);
+    $response["id"] = $insertedId;
+
+
+    // If there are errors in training records, include them in the response
+    if (!empty($errors)) {
+        $response["message"] = "Employee added successfully, but some training records failed.";
+        $response["errors"] = $errors;
+    }
 } else {
-    echo json_encode(["error" => "SQL Error: " . $conn->error, "query" => $sql]);
+    error_log("SQL Error: " . $conn->error); // Log SQL error
+    $response = ["success" => false, "message" => "SQL Error: " . $conn->error, "query" => $sql];
 }
+
+// Send the final JSON response
+echo json_encode($response);
 ?>

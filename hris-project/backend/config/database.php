@@ -8,6 +8,7 @@ $conn = new mysqli($host, $user, $pass, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
+    error_log("Database connection failed: " . $conn->connect_error); // Log connection error
     die(json_encode(["error" => "Database connection failed: " . $conn->connect_error]));
 } else {
     error_log("Database connection successful."); // Debugging log

@@ -12,7 +12,7 @@ if (!isset($conn) || $conn->connect_error) {
 // Fetch all employees from the employees table
 $sql = "SELECT id, name, position, department, date_hired, address, status, telephone, cellphone, 
                birthdate, birthplace, tin_number, civil_status, sex, sss_number, nationality, weight, height, 
-               educational_background, employment_record 
+               educational_background, employment_record, training_records
         FROM employees";
 
 $result = $conn->query($sql);
@@ -30,6 +30,9 @@ while ($row = $result->fetch_assoc()) {
         : [];
     $row['employment_record'] = !empty($row['employment_record']) 
         ? json_decode($row['employment_record'], true) 
+        : [];
+    $row['training_records'] = !empty($row['training_records']) 
+        ? json_decode($row['training_records'], true) 
         : [];
     
     $employees[] = $row;

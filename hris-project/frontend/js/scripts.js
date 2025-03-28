@@ -52,6 +52,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             ];
 
+            // Structuring Training Records
+            data.training_records = [
+                {
+                    date: data.training_date || "",
+                    course_title: data.course_title || "",
+                    address: data.training_address || "",
+                    trainer: data.trainer || ""
+                }
+            ];
+
             // Remove individual input fields since they're now in arrays
             delete data.elementary_school;
             delete data.elementary_date;
@@ -72,29 +82,49 @@ document.addEventListener("DOMContentLoaded", function () {
             delete data.company;
             delete data.company_address;
             delete data.employment_position;
+          
 
-            // Convert to JSON before sending
-            fetch("http://localhost/hris/hris-project/backend/models/Employee.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    alert("Employee added successfully!");
-                    form.reset();
-                } else {
-                    console.error("Error:", result.error);
-                    alert("Failed to add employee.");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("An error occurred while adding the employee.");
-            });
+            // Validate data before sending
+            try {
+                const jsonData = JSON.stringify(data);
+                fetch("http://localhost/hris/hris-project/backend/models/Employee.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: jsonData,
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error("HTTP Error Response:", response);
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.text().then(text => {
+                        try {
+                            return JSON.parse(text);
+                        } catch (error) {
+                            console.error("Invalid JSON Response:", text);
+                            throw new Error("Invalid JSON response from server.");
+                        }
+                    });
+                })
+                .then(result => {
+                    if (result.success) {
+                        alert("Employee added successfully!");
+                        form.reset();
+                    } else {
+                        console.error("Server Error Response:", result);
+                        alert(`Failed to add employee. Error: ${result.message || "Unknown error"}`);
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch Error:", error.message);
+                    alert(`An error occurred: ${error.message}`);
+                });
+            } catch (error) {
+                console.error("JSON Error:", error.message);
+                alert("Failed to process the form data. Please check your input.");
+            }
         });
     }
 });

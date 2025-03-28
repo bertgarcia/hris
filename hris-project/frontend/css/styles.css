@@ -335,9 +335,9 @@ th:nth-child(8), td:nth-child(8) { width: 120px; } /* Telephone */
 th:nth-child(9), td:nth-child(9) { width: 120px; } /* Cellphone */
 th:nth-child(10), td:nth-child(10) { width: 120px; } /* Birthdate */
 th:nth-child(11), td:nth-child(11) { width: 150px; } /* Birthplace */
-th:nth-child(12), td:nth-child(12) { width: 120px; } /* TIN Number */
 th:nth-child(13), td:nth-child(13) { width: 120px; } /* Civil Status */
 th:nth-child(14), td:nth-child(14) { width: 80px; } /* Sex */
+th:nth-child(12), td:nth-child(12) { width: 120px; } /* TIN Number */
 th:nth-child(15), td:nth-child(15) { width: 120px; } /* SSS Number */
 th:nth-child(16), td:nth-child(16) { width: 120px; } /* Nationality */
 th:nth-child(17), td:nth-child(17) { width: 80px; } /* Weight */
